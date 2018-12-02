@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const port = 8080
+const recipes = require('../db/recipes.js');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -18,10 +19,14 @@ app.use((req, res, next) => {
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.get('/', (req, res) => {
+app.get('http:www.recipepuppy.com/', (req, res) => {
   const file = path.join(__dirname + '/../client/dist/index.html');
   app.sendFile(file);
 });
+
+app.get('/:ingredients', (req, res) => {
+  
+})
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
 
