@@ -7,7 +7,7 @@ import{
   Text
 } from 'rebass';
 
-const Recipe = ({recipe, saveToDb}) => {
+const FavedRecipe = ({recipe, deleteFromDb}) => {
   return(
     <div className="recipe-entry">
       <Box 
@@ -27,18 +27,19 @@ const Recipe = ({recipe, saveToDb}) => {
               {recipe.ingredients}
             </Text>
             <Image 
-              src="https://img.icons8.com/ios/50/000000/hearts.png"
+              src="https://img.icons8.com/ios/50/000000/waste.png"
               width={[1/8]}
-              onClick={() => saveToDb(recipe)}
+              onClick={() => deleteFromDb(recipe)}
             />
           </Box>
         </Card>
       </Box><br/>
     </div>
-  )
+  );
 }
 
-export default Recipe;
+export default FavedRecipe;
+
 
 /*
 <div className="recipe-title">
@@ -49,6 +50,6 @@ export default Recipe;
       </div>
       <div className="recipe-ingredients">
         {recipe.ingredients}
-        <img className="favorite-heart" src="https://img.icons8.com/ios/50/000000/hearts.png" onClick={() => saveToDb(recipe)}></img>
+        <img className="favorite-heart" src="https://img.icons8.com/ios/50/000000/waste.png" onClick={() => deleteFromDb(recipe)}></img>
       </div>
 */

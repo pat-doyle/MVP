@@ -1,5 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import debounce from 'lodash/debounce';
+
+const styles = {
+  button: {
+    borderRadius: '5px',
+    width: '112px',
+    height: '26px',
+    fontSize: '14px'
+  },
+  input: {
+    height: '26px',
+    fontSize: '14px'
+  },
+  div: {
+    display: 'flex'
+  }
+}
 
 export default class Search extends React.Component{
   constructor(props){
@@ -8,9 +25,24 @@ export default class Search extends React.Component{
     this.state = {
       value: '',
       inputs: [],
-      inputValue: ''
+      inputValue: '',
+      ingInput1: '',
+      ingInput2: '',
+      ingInput3: '',
+      ingInput4: '',
+      ingInput5: '',
     };
+    // this.handleClick.bind(this)
+  }
 
+  componentDidMount() {
+    this.delayed = debounce((e) => {
+      let change = {};
+      change[e.target.name] = e.target.value
+      console.log(change, '<-- change')
+      this.setState(change)
+      console.log('value state -->', this.state.value)
+    }, 600)
   }
 
   appendInput() {
@@ -21,34 +53,45 @@ export default class Search extends React.Component{
     });
   }
 
-  addIngredient(event){
-    event.preventDefault();
-    this.setState({
-      value: event.target.value,
-      inputValue: event.target.value
-    })
-    console.log('value state -->', this.state.value)
+  addIngredient(e) {
+    e.persist();
+    this.delayed(e);
   }
 
   handleClick(e) {
     e.preventDefault();
-    console.log(this.state.value);
+    console.log(this, '<-- this');
+    console.log(e.target.value, '<-- target value')
     this.setState({
-      inputs: this.state.inputs.concat([this.state.value]),
-      inputValue: ''
+      inputs: this.state.inputs.concat([e.target.value]),
     })
     console.log('inputs state', this.state.inputs);
   }
 
+  // handleSubmit(e){
+  //   e.preventDefault();
+  //   console.log('clicked submit')
+  // }
+
   render(){
     return(
-      <div>
-          <input id="ingInput" type="text" placeholder="Enter Ingredient" onChange={this.addIngredient.bind(this)} value={this.state.inputValue}></input><br/>
-          <button onClick={this.handleClick.bind(this)}>
-            Add Another Ingredient
-          </button>
-          <button type="submit" onClick={this.props.getRecipes(this.state.inputs)}>Search</button>
+     
+      <div style={styles.div}>
+      <form>
+          <input style={styles.input} name="ingInput1" type="text" placeholder="Enter Ingredient" onChange={this.addIngredient.bind(this)} onBlur={this.handleClick.bind(this)} required></input><br/><br/>
+          <input style={styles.input} name="ingInput2" type="text" placeholder="Enter Ingredient" onChange={this.addIngredient.bind(this)} onBlur={this.handleClick.bind(this)}></input><br/><br/>
+          <input style={styles.input} name="ingInput3" type="text" placeholder="Enter Ingredient" onChange={this.addIngredient.bind(this)} onBlur={this.handleClick.bind(this)}></input><br/><br/>
+          <input style={styles.input} name="ingInput4" type="text" placeholder="Enter Ingredient" onChange={this.addIngredient.bind(this)} onBlur={this.handleClick.bind(this)}></input><br/><br/>
+          <input style={styles.input} name="ingInput5" type="text" placeholder="Enter Ingredient" onChange={this.addIngredient.bind(this)} onBlur={this.handleClick.bind(this)}></input><br/><br/>
+          <button type="submit"
+            style={styles.button}
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.getRecipes(this.state.inputs)
+          }}>Search</button>
+        </form>
       </div>
+      
     );
   }
 }

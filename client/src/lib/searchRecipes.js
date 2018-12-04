@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const searchRecipes = (ingredients, callback) => {
+  ingredients = ingredients.join(',');
   axios.get(`/api/?i=${ingredients}`)
       .then(res => {
         console.log('res in axios get -->', res);
