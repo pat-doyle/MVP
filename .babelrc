@@ -3,6 +3,7 @@
   "plugins": [[
     "@babel/plugin-transform-react-jsx",{
       "throwIfNamespace": false
-    }
+    },
+    "@babel/plugin-proposal-class-properties"
   ]]
 }
