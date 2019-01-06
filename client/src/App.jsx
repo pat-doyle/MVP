@@ -74,24 +74,28 @@ export default class App extends React.Component{
         'Content-Type': 'application/json'
       }
     })
-    alert('Saved to Favorites');
+    // alert('Saved to Favorites');
   }
-
+  
   deleteFromDb(recipe) {
     console.log('This is inside delete request App.jsx', recipe);
+    
     axios.delete(`/database/${recipe._id}`)
-      .then((res) => {
+      .then(() => {
         console.log('Delete request response in App.jsx line 67', res);
-        axios.get(`http://localhost:8080/data/${query}`)
-          .then(res => {
-            console.log('res in get ==>', res.data);
-            this.setState({
-              recipes: res.data,
-              currentRecipe: res.data[0]
-            })
-          })
+        updateOnDelete();
       })
       .catch(() => console.log('Catch block of delete in App.jsx'));
+  }
+  updateOnDelete(){
+    axios.get(`http://localhost:8080/faves`)
+      .then(res => {
+        console.log('res.data in get ==>', res.data);
+        that.setState({
+          recipes: res.data,
+        })
+      })
+      .catch(() => console.log('Error in updateOnDelete'))
   }
 
   renderView(){
