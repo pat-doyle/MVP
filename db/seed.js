@@ -22,6 +22,7 @@ const insertStarters = () => {
       console.log('Created db')
       db.disconnect()
     })
+    .catch(() => console.log('Error seeding DB'))
 };
 
 insertStarters();
