@@ -57,7 +57,7 @@ app.post('/recipes', (req, res) => {
 app.get('/faves', (req, res) => {
   console.log('got into fave request *******');
   Recipes.findFaves(recipes => {
-    console.log('recipes in faves get request', recipes)
+    // console.log('recipes in faves get request', recipes)
     res.send(recipes);
     res.end();
   })
